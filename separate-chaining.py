@@ -14,7 +14,9 @@ class SeperateChaining:
     
     table,size = [],0
     load_factor = 2;
-    def __init__(self,m=1): self.table = [None]*m;
+    def __init__(self,m=10):
+        if(m <= 10): m =10;
+        self.table = [None]*m;
     
     def __h(self,key):
         key = str(key);
@@ -43,7 +45,7 @@ class SeperateChaining:
             self.size += 1;
         if(self.size/len(self.table) > self.load_factor): self.rehash();
         return oldvalue;
-
+    
     def delete(self,key):
         i = self.__h(key);
         if(self.table[i] == None): return;
@@ -68,7 +70,7 @@ class SeperateChaining:
                 item_list.append((firstnode.key,firstnode.value));
                 firstnode = firstnode.next_node
             y.append(len(item_list));
-        print(len(self.table));
+        print("table length : ",len(self.table));
         plt.bar(x,y);
         plt.show();
 
@@ -85,29 +87,24 @@ class SeperateChaining:
                 k,v = item_list[j].key,item_list[j].value;
                 newChain.put(k,v);
         self.size = newChain.length();
-        self.table = newChain.table;   
-'''
-test = SeperateChaining(2);
-test.put("name","YN_TH");
-test.put("name2","YN_TH2");
-test.put("name3","YN_TH3");
+        self.table = newChain.table;
 
-n1=test.get("name");
-n2=test.get("name2");
-n3=test.get("name3");
+n = 1000; # try n about 100000
+h = SeperateChaining();
+for i in range(n):
+    h.put(i,i);
+for i in range(n):
+    if(type(h.get(i))!= int): print(i,"RIP");
+print("Seperate Chaining Hashing HashTable OK");
 
-#test.delete("name");
-#test.delete("name2");
-#test.delete("name3");
+print("PASS");
 
+arr = []
 
-n11=test.get("name");
-n22=test.get("name2");
-n33=test.get("name3");
-'''
+for i in range(n):
+    arr.append(i);
+for i in range(n):
+    if(not i in arr): print(i,"RIP");
+print("ArrayList is OK");
 
-test = SeperateChaining(100);
-data = [ (i,i) for i in range(1000) ];
-
-for e in data:
-    test.put(e[0],e[1]);
+h.display(); #if you try n about 100000 plese comment this line.
